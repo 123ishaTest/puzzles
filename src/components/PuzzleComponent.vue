@@ -5,8 +5,8 @@
     <div class="puzzle-container">
       <div v-for="(row, y) in puzzle.cells" :key="'row-'+y">
         <div v-for="(cell, x) in row" :key="'cell-'+x+'-'+y">
-          <div class="">
-
+          <div class="bg-red-100">
+s
             {{ cell }}
           </div>
         </div>
