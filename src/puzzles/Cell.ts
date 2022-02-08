@@ -1,9 +1,5 @@
-export class Cell<T> {
-    value: T;
+import {Corner} from "@/puzzles/Corner";
+import {Edge} from "@/puzzles/Edge";
+import {Tile} from "@/puzzles/Tile";
 
-    constructor(value: T) {
-        this.value = value;
-    }
-
-
-}
+export type Cell = Corner | Edge | Tile;

@@ -1,5 +1,5 @@
 export interface PuzzleOptions {
-    useCells?: boolean;
+    useTiles?: boolean;
     useEdges?: boolean;
     useLines?: boolean;
 }

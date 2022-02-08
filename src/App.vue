@@ -1,5 +1,9 @@
 <template>
-  <puzzle-component :puzzle="puzzle"></puzzle-component>
+  <div class="flex flex-col h-screen justify-center">
+    <div class="flex flex-row justify-center">
+      <puzzle-component :puzzle="puzzle"></puzzle-component>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
