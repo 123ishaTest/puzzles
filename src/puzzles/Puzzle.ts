@@ -2,18 +2,29 @@ import {AbstractConstraint} from "@/puzzles/constraints/AbstractConstraint";
 import {Tile} from "@/puzzles/Tile";
 import {Edge} from "@/puzzles/Edge";
 import {Corner} from "@/puzzles/Corner";
+import {PuzzleConfig} from "@/puzzles/instances/PuzzleConfig";
+import {InstanceConfig} from "@/puzzles/instances/InstanceConfig";
 
 export class Puzzle {
+    // Config
+    editTiles: boolean;
+    editEdges: boolean;
+
     height: number;
     width: number;
 
-    constraints: AbstractConstraint[];
+    constraints: AbstractConstraint[] = [];
     grid: (Tile | Edge | Corner)[][];
 
-    constructor(height: number, width: number, constraints: AbstractConstraint[]) {
-        this.height = height;
-        this.width = width;
-        this.constraints = constraints;
+    constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
+        // Process puzzleConfig
+        this.editTiles = puzzleConfig.editTiles ?? true;
+        this.editEdges = puzzleConfig.editEdges ?? false;
+
+
+        // Initialize grid
+        this.height = instanceConfig.height;
+        this.width = instanceConfig.width;
 
         const gridHeight = 2 * this.height + 1;
         const gridWidth = 2 * this.width + 1;
@@ -34,16 +45,26 @@ export class Puzzle {
         }
     }
 
+    public addConstraint(constraint: AbstractConstraint): this {
+        this.constraints.push(constraint);
+        return this;
+    }
+
+    public setConstraints(constraints: AbstractConstraint[]): this {
+        this.constraints = constraints;
+        return this;
+    }
+
     public getTile(x: number, y: number): Tile {
         return this.grid[2 * y + 1][2 * x + 1] as Tile;
     }
 
     public getEdges(x: number, y: number): Edge[] {
         return [
-            this.grid[2 * y][2 * x + 1] as Edge,
-            this.grid[2 * y][2 * x - 1] as Edge,
-            this.grid[2 * y - 1][2 * x] as Edge,
-            this.grid[2 * y + 1][2 * x] as Edge,
+            this.grid[2 * y + 0][2 * x + 1] as Edge,
+            this.grid[2 * y + 2][2 * x + 1] as Edge,
+            this.grid[2 * y + 1][2 * x + 2] as Edge,
+            this.grid[2 * y + 1][2 * x + 0] as Edge,
         ]
     }
 
@@ -52,12 +73,20 @@ export class Puzzle {
     }
 
     isValid(): boolean {
-        this.constraints.forEach(constraint => {
+        for (const constraint of this.constraints) {
             const isValid = constraint.isValid(this);
             if (!isValid) {
                 return false;
             }
-        })
+        }
+
         return true;
+    }
+
+    toggleEdge(edge: Edge): void {
+        if (!this.editEdges) {
+            return;
+        }
+        edge.toggle();
     }
 }

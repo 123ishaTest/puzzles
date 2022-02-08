@@ -9,7 +9,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import PuzzleComponent from "@/components/PuzzleComponent.vue";
-import {Puzzle} from "@/puzzles/Puzzle";
+import {Slitherlink} from "@/puzzles/instances/slitherlink/Slitherlink";
 
 export default defineComponent({
   name: 'App',
@@ -18,7 +18,10 @@ export default defineComponent({
   },
   data() {
     return {
-      puzzle: new Puzzle(9, 9, [])
+      puzzle: new Slitherlink({
+        width: 4,
+        height: 4,
+      })
     }
   },
 });

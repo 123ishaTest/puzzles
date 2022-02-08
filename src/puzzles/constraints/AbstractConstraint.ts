@@ -1,9 +1,9 @@
 import {Puzzle} from "@/puzzles/Puzzle";
 
 export abstract class AbstractConstraint {
-    abstract isValid(puzzle: Puzzle<unknown>): boolean;
+    abstract isValid(puzzle: Puzzle): boolean;
 
-    abstract highlight(puzzle: Puzzle<unknown>): void;
+    abstract highlight(puzzle: Puzzle): void;
 
-    abstract hint(puzzle: Puzzle<unknown>): string;
+    abstract hint(puzzle: Puzzle): string;
 }

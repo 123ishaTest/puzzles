@@ -1,15 +1,17 @@
 <template>
   <div>
 
-    <div class="puzzle-container">
+    <div class="puzzle-container flex flex-col">
       <div class="flex flex-row" v-for="(row, y) in puzzle.grid" :key="'row-'+y">
-        <div class="flex flex-col" v-for="(cell, x) in row" :key="'cell-'+x+'-'+y">
+        <div v-for="(cell, x) in row" :key="'cell-'+x+'-'+y">
           <corner-component v-if="y % 2 === 0 && x % 2 === 0" :corner="cell"></corner-component>
-          <tile-component v-else-if="y % 2 === 1 && x % 2 === 1" :tile="cell"></tile-component>
-          <edge-component v-else :edge="cell" :is-horizontal="y % 2 === 0"></edge-component>
+          <tile-component @tile="tileClicked" v-else-if="y % 2 === 1 && x % 2 === 1" :tile="cell"></tile-component>
+          <edge-component @edge="edgeClicked" v-else :edge="cell" :is-horizontal="y % 2 === 0"></edge-component>
         </div>
       </div>
     </div>
+    <button @click="checkIsSolved()">Check!</button>
+    <p>Is solved: {{ isSolved }}</p>
   </div>
 </template>
 
@@ -19,6 +21,8 @@ import {Puzzle} from "@/puzzles/Puzzle";
 import TileComponent from "@/components/TileComponent.vue";
 import EdgeComponent from "@/components/EdgeComponent.vue";
 import CornerComponent from "@/components/CornerComponent.vue";
+import {Tile} from "@/puzzles/Tile";
+import {Edge} from "@/puzzles/Edge";
 
 export default defineComponent({
   name: 'PuzzleComponent',
@@ -27,6 +31,23 @@ export default defineComponent({
     puzzle: {
       type: Puzzle,
       required: true,
+    }
+  },
+  data() {
+    return {
+      isSolved: false
+    }
+  },
+  methods: {
+    checkIsSolved() {
+      this.isSolved = this.puzzle.isValid()
+    },
+    tileClicked(tile: Tile) {
+      this.checkIsSolved();
+    },
+    edgeClicked(edge: Edge) {
+      this.puzzle.toggleEdge(edge);
+      this.checkIsSolved();
     }
   },
 });

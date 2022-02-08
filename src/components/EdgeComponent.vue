@@ -1,5 +1,5 @@
 <template>
-  <div :class="dimensions + ' bg-yellow-400'"></div>
+  <div @click="click" :class="dimensions + ' ' + edgeColor"></div>
 </template>
 
 <script lang="ts">
@@ -21,6 +21,14 @@ export default defineComponent({
   computed: {
     dimensions() {
       return this.isHorizontal ? 'w-12 h-4' : 'w-4 h-12';
+    },
+    edgeColor() {
+      return this.edge.value ? 'bg-green-400' : 'bg-yellow-400';
+    }
+  },
+  methods: {
+    click(): void {
+      this.$emit('edge', this.edge);
     }
   },
 });
