@@ -14,6 +14,5 @@ export class Slitherlink extends Puzzle {
         this.setConstraints([
             new NeighbouringEdgesCount()
         ]);
-        this.getTile(1, 2).setValue(3);
     }
 }

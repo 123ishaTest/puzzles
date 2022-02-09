@@ -3,7 +3,7 @@ import {Tile} from "@/puzzles/Tile";
 import {Edge} from "@/puzzles/Edge";
 import {Corner} from "@/puzzles/Corner";
 import {PuzzleConfig} from "@/puzzles/instances/PuzzleConfig";
-import {InstanceConfig} from "@/puzzles/instances/InstanceConfig";
+import {InstanceConfig, TileClue} from "@/puzzles/instances/InstanceConfig";
 
 export class Puzzle {
     // Config
@@ -43,6 +43,13 @@ export class Puzzle {
             }
             this.grid.push(row);
         }
+
+        // Add clues
+        if (instanceConfig.tileClues) {
+            instanceConfig.tileClues.forEach((tileClue: TileClue) => {
+                this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value);
+            })
+        }
     }
 
     public addConstraint(constraint: AbstractConstraint): this {
@@ -59,7 +66,7 @@ export class Puzzle {
         return this.grid[2 * y + 1][2 * x + 1] as Tile;
     }
 
-    public getEdges(x: number, y: number): Edge[] {
+    public getTileEdges(x: number, y: number): Edge[] {
         return [
             this.grid[2 * y + 0][2 * x + 1] as Edge,
             this.grid[2 * y + 2][2 * x + 1] as Edge,

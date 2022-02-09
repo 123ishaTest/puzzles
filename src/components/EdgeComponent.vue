@@ -23,7 +23,7 @@ export default defineComponent({
       return this.isHorizontal ? 'w-12 h-4' : 'w-4 h-12';
     },
     edgeColor() {
-      return this.edge.value ? 'bg-green-400' : 'bg-yellow-400';
+      return this.edge.value ? 'bg-black' : 'bg-gray-300';
     }
   },
   methods: {

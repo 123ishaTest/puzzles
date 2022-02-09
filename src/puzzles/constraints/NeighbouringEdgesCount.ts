@@ -19,7 +19,7 @@ export class NeighbouringEdgesCount extends AbstractConstraint {
                 if (!tile.value) {
                     continue;
                 }
-                const edges = puzzle.getEdges(x, y);
+                const edges = puzzle.getTileEdges(x, y);
                 let edgeCount = 0;
                 edges.forEach(edge => {
                     if (edge.value === true) {
