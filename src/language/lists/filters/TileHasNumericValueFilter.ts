@@ -7,7 +7,7 @@ import {BooleanType} from "@/language/types/BooleanType";
  * Filters out tiles without a numeric value
  */
 export class TileHasNumericValueFilter extends Filter {
-    id = StatementId.EdgeCountFunction;
+    id = StatementId.TileHasNumericValueFilter;
 
     constructor() {
         super();

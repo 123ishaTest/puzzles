@@ -7,7 +7,7 @@ import {Memory} from "@/language/memory/Memory";
  * Returns the value of the given tile
  */
 export class TileValueFunction extends NullaryFunction {
-    id = StatementId.EdgeCountFunction;
+    id = StatementId.TileValueFunction;
 
     constructor() {
         super();

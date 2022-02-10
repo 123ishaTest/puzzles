@@ -7,25 +7,23 @@ import {False} from "@/language/types/False";
 import {BinaryExpression} from "@/language/BinaryExpression";
 import {Filter} from "@/language/lists/filters/Filter";
 
-export class ForEachTile extends BinaryExpression {
-    id = StatementId.ForEachTile;
+export class ForEachCorner extends BinaryExpression {
+    id = StatementId.ForEachCorner;
 
     constructor(where: Filter, expr: AbstractExpression) {
         super(where, expr);
     }
 
     evaluate(memory: Memory): BooleanType {
-        let tiles = memory.puzzle.getTiles()
+        let corners = memory.puzzle.getCorners()
 
-        tiles = tiles.filter(tile => {
-            memory.tile = tile;
+        corners = corners.filter(corner => {
+            memory.corner = corner;
             return this.left.evaluate(memory).value;
         });
 
-        console.log(tiles);
-
-        for (const tile of tiles) {
-            memory.tile = tile;
+        for (const corner of corners) {
+            memory.corner = corner;
 
             const result = this.right.evaluate(memory);
             if (result.value === false) {

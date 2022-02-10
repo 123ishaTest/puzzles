@@ -4,24 +4,24 @@ import {NullaryFunction} from "@/language/functions/NullaryFunction";
 import {Memory} from "@/language/memory/Memory";
 
 /**
- * Counts the number of edges a given tile has active.
+ * Counts the number of edges a given corner has active.
  */
-export class TileEdgeCountFunction extends NullaryFunction {
-    id = StatementId.TileEdgeCountFunction;
+export class CornerEdgeCountFunction extends NullaryFunction {
+    id = StatementId.CornerEdgeCountFunction;
 
     constructor() {
         super();
     }
 
     evaluate(memory: Memory): NumberType {
-        const tile = memory.tile;
+        const corner = memory.corner;
 
-        if (!tile) {
-            throw new PuzzleDataNotSetError(`Tile not set for ${this.id} function`)
+        if (!corner) {
+            throw new PuzzleDataNotSetError(`Corner not set for ${this.id} function`)
         }
 
         let sum = 0;
-        tile.getNeighbouringEdges().forEach(edge => {
+        corner.getNeighbouringEdges().forEach(edge => {
             if (edge.value) {
                 sum++;
             }

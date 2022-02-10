@@ -7,6 +7,9 @@ import {TileValueFunction} from "@/language/functions/builtins/TileValueFunction
 import {TileHasNumericValueFilter} from "@/language/lists/filters/TileHasNumericValueFilter";
 import {AllFilter} from "@/language/lists/filters/AllFilter";
 import {NumberLiteral} from "@/language/literals/NumberLiteral";
+import {ForEachCorner} from "@/language/lists/ForEachCorner";
+import {Or} from "@/language/logic/Or";
+import {CornerEdgeCountFunction} from "@/language/functions/builtins/CornerEdgeCountFunction";
 
 export class Slitherlink extends Puzzle {
 
@@ -24,11 +27,11 @@ export class Slitherlink extends Puzzle {
                     new ForEachCorner(
                         new AllFilter(),
                         new Or(
-                            new CornerEdgeCountFunction(), new NumberLiteral(0),
-                            new CornerEdgeCountFunction(), new NumberLiteral(2),
+                            new Eq(new CornerEdgeCountFunction(), new NumberLiteral(0)),
+                            new Eq(new CornerEdgeCountFunction(), new NumberLiteral(2)),
                         ),
                     ),
-                    new Eq(new EdgeGroupCount(), new NumberLiteral(2)),
+                    // new Eq(new EdgeGroupCount(), new NumberLiteral(2)),
                 ]
             }
         );

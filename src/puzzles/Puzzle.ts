@@ -26,6 +26,10 @@ export class Puzzle {
         this.editEdges = puzzleConfig.editEdges ?? false;
         this.editCorners = puzzleConfig.editCorners ?? false;
 
+        // Add constraints
+        if (puzzleConfig.constraints) {
+            this.setConstraints(puzzleConfig.constraints);
+        }
 
         // Initialize grid
         this.height = instanceConfig.height;
@@ -183,5 +187,15 @@ export class Puzzle {
             }
         }
         return tiles;
+    }
+
+    getCorners(): Corner[] {
+        const corners = [];
+        for (let y = 0; y < this.height + 1; y++) {
+            for (let x = 0; x < this.width + 1; x++) {
+                corners.push(this.getCorner(x, y));
+            }
+        }
+        return corners;
     }
 }

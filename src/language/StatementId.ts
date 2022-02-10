@@ -1,6 +1,6 @@
 export enum StatementId {
 
-    // Literals
+    // Literals,
     BooleanLiteral = 'boolean-literal',
     NumberLiteral = 'number-literal',
     NoneLiteral = 'none-literal',
@@ -12,10 +12,17 @@ export enum StatementId {
 
     // Logic
     Eq = 'eq',
+    Or = 'or',
     Gt = 'gt',
 
+    // Lists
     ForEachTile = 'for-each-tile',
+    ForEachCorner = 'for-each-corner',
 
+    // Filters
+    AllFilter = 'all',
+    NoneFilter = 'none',
+    TileHasNumericValueFilter = 'tile-has-numeric-value',
 
     // Statements
     IfStatement = "if-statement",
@@ -25,7 +32,9 @@ export enum StatementId {
     Add = 'add',
 
     // Functions
-    EdgeCountFunction = 'edge-count',
+    TileValueFunction = 'tile-value',
+    TileEdgeCountFunction = 'tile-edge-count',
+    CornerEdgeCountFunction = 'corner-edge-count',
     EdgeGroupCountFunction = 'edge-group-count',
 
 }
