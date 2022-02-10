@@ -4,14 +4,18 @@ import {Edge} from "@/puzzles/Edge";
 import {Corner} from "@/puzzles/Corner";
 import {PuzzleConfig} from "@/puzzles/instances/PuzzleConfig";
 import {InstanceConfig, TileClue} from "@/puzzles/instances/InstanceConfig";
+import {Cell} from "@/puzzles/Cell";
 
 export class Puzzle {
     // Config
     editTiles: boolean;
     editEdges: boolean;
+    editCorners: boolean;
 
     height: number;
     width: number;
+    gridHeight: number;
+    gridWidth: number;
 
     constraints: AbstractConstraint[] = [];
     grid: (Tile | Edge | Corner)[][];
@@ -20,28 +24,78 @@ export class Puzzle {
         // Process puzzleConfig
         this.editTiles = puzzleConfig.editTiles ?? true;
         this.editEdges = puzzleConfig.editEdges ?? false;
+        this.editCorners = puzzleConfig.editCorners ?? false;
 
 
         // Initialize grid
         this.height = instanceConfig.height;
         this.width = instanceConfig.width;
 
-        const gridHeight = 2 * this.height + 1;
-        const gridWidth = 2 * this.width + 1;
+        this.gridHeight = 2 * this.height + 1;
+        this.gridWidth = 2 * this.width + 1;
 
         this.grid = [];
-        for (let y = 0; y < gridHeight; y++) {
+        for (let y = 0; y < this.gridHeight; y++) {
             const row = [];
-            for (let x = 0; x < gridWidth; x++) {
+            for (let x = 0; x < this.gridWidth; x++) {
                 if (y % 2 === 0 && x % 2 === 0) {
                     row.push(new Corner())
                 } else if (y % 2 === 1 && x % 2 === 1) {
                     row.push(new Tile(''))
                 } else {
-                    row.push(new Edge())
+                    row.push(new Edge(y % 2 === 0))
                 }
             }
             this.grid.push(row);
+        }
+
+        // Connect the grid
+        for (let y = 0; y < this.gridHeight; y++) {
+            for (let x = 0; x < this.gridWidth; x++) {
+                if (y % 2 === 0 && x % 2 === 0) {
+                    const corner = this.grid[y][x] as Corner;
+
+                    corner.northEdge = this.getCell(x, y - 1) as Edge;
+                    corner.eastEdge = this.getCell(x + 1, y) as Edge;
+                    corner.southEdge = this.getCell(x, y + 1) as Edge;
+                    corner.westEdge = this.getCell(x - 1, y) as Edge;
+
+                    corner.northEastTile = this.getCell(x + 1, y - 1) as Tile;
+                    corner.southEastTile = this.getCell(x + 1, y + 1) as Tile;
+                    corner.southWestTile = this.getCell(x - 1, y + 1) as Tile;
+                    corner.northWestTile = this.getCell(x - 1, y - 1) as Tile;
+                } else if (y % 2 === 1 && x % 2 === 1) {
+                    const tile = this.grid[y][x] as Tile;
+
+                    tile.northEdge = this.getCell(x, y - 1) as Edge;
+                    tile.eastEdge = this.getCell(x + 1, y) as Edge;
+                    tile.southEdge = this.getCell(x, y + 1) as Edge;
+                    tile.westEdge = this.getCell(x - 1, y) as Edge;
+
+                    tile.northEastCorner = this.getCell(x + 1, y - 1) as Corner;
+                    tile.southEastCorner = this.getCell(x + 1, y + 1) as Corner;
+                    tile.southWestCorner = this.getCell(x - 1, y + 1) as Corner;
+                    tile.northWestCorner = this.getCell(x - 1, y - 1) as Corner;
+                } else {
+                    const edge = this.grid[y][x] as Edge;
+
+                    if (edge.isHorizontal) {
+                        edge.firstTile = this.getCell(x, y - 1) as Tile;
+                        edge.secondTile = this.getCell(x, y + 1) as Tile;
+
+                        edge.firstCorner = this.getCell(x - 1, y) as Corner;
+                        edge.secondCorner = this.getCell(x + 1, y) as Corner;
+
+                    } else {
+                        edge.firstTile = this.getCell(x - 1, y) as Tile;
+                        edge.secondTile = this.getCell(x + 1, y) as Tile;
+
+                        edge.firstCorner = this.getCell(x, y - 1) as Corner;
+                        edge.secondCorner = this.getCell(x, y + 1) as Corner;
+                    }
+
+                }
+            }
         }
 
         // Add clues
@@ -49,6 +103,14 @@ export class Puzzle {
             instanceConfig.tileClues.forEach((tileClue: TileClue) => {
                 this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value);
             })
+        }
+    }
+
+    public getCell(x: number, y: number): Cell | undefined {
+        if (x < 0 || x >= this.gridWidth || y < 0 || y >= this.gridHeight) {
+            return undefined;
+        } else {
+            return this.grid[y][x];
         }
     }
 
@@ -95,5 +157,19 @@ export class Puzzle {
             return;
         }
         edge.toggle();
+    }
+
+    toggleCorner(corner: Corner): void {
+        if (!this.editCorners) {
+            return;
+        }
+        corner.toggle();
+    }
+
+    setTileValue(tile: Tile, number: number): void {
+        if (!this.editTiles) {
+            return;
+        }
+        tile.setValue(number);
     }
 }

@@ -7,8 +7,9 @@ export class Slitherlink extends Puzzle {
     constructor(instanceConfig: InstanceConfig) {
         super(instanceConfig,
             {
-                editTiles: false,
+                editTiles: true,
                 editEdges: true,
+                editCorners: true,
             }
         );
         this.setConstraints([

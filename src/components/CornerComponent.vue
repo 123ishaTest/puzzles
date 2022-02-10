@@ -1,5 +1,5 @@
 <template>
-  <div class="h-4 w-4 bg-red-400"></div>
+  <div @click="click" :class="'h-4 w-4 ' + cornerColor"></div>
 </template>
 
 <script lang="ts">
@@ -12,6 +12,16 @@ export default defineComponent({
     corner: {
       type: Corner,
       required: true,
+    }
+  },
+  computed: {
+    cornerColor() {
+      return this.corner.value ? 'bg-black' : 'bg-red-400';
+    }
+  },
+  methods: {
+    click(): void {
+      this.$emit('corner', this.corner);
     }
   },
 });

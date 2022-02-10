@@ -13,14 +13,10 @@ export default defineComponent({
       type: Edge,
       required: true,
     },
-    isHorizontal: {
-      type: Boolean,
-      required: true,
-    }
   },
   computed: {
     dimensions() {
-      return this.isHorizontal ? 'w-12 h-4' : 'w-4 h-12';
+      return this.edge.isHorizontal ? 'w-12 h-4' : 'w-4 h-12';
     },
     edgeColor() {
       return this.edge.value ? 'bg-black' : 'bg-gray-300';
