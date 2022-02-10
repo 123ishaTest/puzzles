@@ -10,7 +10,7 @@ export class TileValueFunction extends NullaryFunction {
     id = StatementId.EdgeCountFunction;
 
     constructor() {
-        super("TileValue");
+        super();
     }
 
     evaluate(memory: Memory): NumberType {

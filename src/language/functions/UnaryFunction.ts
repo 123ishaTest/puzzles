@@ -6,8 +6,8 @@ export abstract class UnaryFunction extends FunctionExpression {
     acceptedTypes: LanguageType[];
     arg: AbstractExpression;
 
-    protected constructor(name: string, acceptedTypes: LanguageType[], arg: AbstractExpression) {
-        super(name);
+    protected constructor(acceptedTypes: LanguageType[], arg: AbstractExpression) {
+        super();
         this.acceptedTypes = acceptedTypes;
         this.arg = arg;
     }

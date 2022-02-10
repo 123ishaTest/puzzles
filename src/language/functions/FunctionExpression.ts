@@ -1,10 +1,8 @@
 import {AbstractExpression} from "@/language/AbstractExpression";
 
 export abstract class FunctionExpression extends AbstractExpression {
-    name: string
 
-    protected constructor(name: string) {
+    protected constructor() {
         super();
-        this.name = name;
     }
 }

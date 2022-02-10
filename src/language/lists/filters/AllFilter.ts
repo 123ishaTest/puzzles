@@ -2,11 +2,12 @@ import {StatementId} from "@/language/StatementId";
 import {Memory} from "@/language/memory/Memory";
 import {Filter} from "@/language/lists/filters/Filter";
 import {BooleanType} from "@/language/types/BooleanType";
+import {True} from "@/language/types/True";
 
 /**
- * Filters out tiles without a numeric value
+ * Doesn't filter anything
  */
-export class TileHasNumericValueFilter extends Filter {
+export class AllFilter extends Filter {
     id = StatementId.EdgeCountFunction;
 
     constructor() {
@@ -14,13 +15,7 @@ export class TileHasNumericValueFilter extends Filter {
     }
 
     evaluate(memory: Memory): BooleanType {
-        const tile = memory.tile;
-
-        if (!tile) {
-            throw new PuzzleDataNotSetError(`Tile not set for ${this.id} function`)
-        }
-
-        return new BooleanType(Number.isFinite(tile.value));
+        return new True();
     }
 
 }

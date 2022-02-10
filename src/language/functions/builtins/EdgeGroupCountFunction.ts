@@ -10,7 +10,7 @@ export class EdgeGroupCountFunction extends NullaryFunction {
     id = StatementId.EdgeGroupCountFunction;
 
     constructor() {
-        super("EdgeGroupCount");
+        super();
     }
 
     evaluate(): NumberType {

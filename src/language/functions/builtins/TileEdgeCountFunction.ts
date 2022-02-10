@@ -6,11 +6,11 @@ import {Memory} from "@/language/memory/Memory";
 /**
  * Counts the number of edges a given tile has active.
  */
-export class EdgeCountFunction extends NullaryFunction {
+export class TileEdgeCountFunction extends NullaryFunction {
     id = StatementId.EdgeCountFunction;
 
     constructor() {
-        super("EdgeCount");
+        super();
     }
 
     evaluate(memory: Memory): NumberType {
