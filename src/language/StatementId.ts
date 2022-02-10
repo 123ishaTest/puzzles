@@ -22,5 +22,7 @@ export enum StatementId {
     Add = 'add',
 
     // Functions
-    EdgeCountFunction = 'edge-count'
+    EdgeCountFunction = 'edge-count',
+    EdgeGroupCountFunction = 'edge-group-count',
+
 }
