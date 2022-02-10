@@ -22,8 +22,6 @@ export class ForEachTile extends BinaryExpression {
             return this.left.evaluate(memory).value;
         });
 
-        console.log(tiles);
-
         for (const tile of tiles) {
             memory.tile = tile;
 

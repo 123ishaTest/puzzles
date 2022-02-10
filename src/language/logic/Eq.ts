@@ -15,7 +15,7 @@ export class Eq extends BinaryExpression {
     evaluate(memory: Memory): BooleanType {
         const left = this.left.evaluate(memory);
         const right = this.right.evaluate(memory);
-        console.log(left, right);
+
         if (left.type != right.type) {
             throw new LangTypeError(`Cannot compare different types ${left} and ${right}`)
         }
