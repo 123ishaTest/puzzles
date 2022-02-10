@@ -145,12 +145,12 @@ export class Puzzle {
         return this.grid[2 * y][2 * x] as Corner;
     }
 
-    isValid(): boolean {
+    isSolved(): boolean {
         for (const constraint of this.constraints) {
-            const isValid = constraint.evaluate({
+            const isSolved = constraint.evaluate({
                 puzzle: this,
             }).value;
-            if (!isValid) {
+            if (!isSolved) {
                 return false;
             }
         }

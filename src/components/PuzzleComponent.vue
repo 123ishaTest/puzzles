@@ -10,7 +10,6 @@
         </div>
       </div>
     </div>
-    <button @click="checkIsSolved()">Check!</button>
     <p>Is solved: {{ isSolved }}</p>
   </div>
 </template>
@@ -41,7 +40,7 @@ export default defineComponent({
   },
   methods: {
     checkIsSolved() {
-      this.isSolved = this.puzzle.isValid()
+      this.isSolved = this.puzzle.isSolved()
     },
     tileClicked(tile: Tile) {
       this.puzzle.setTileValue(tile, 3);
