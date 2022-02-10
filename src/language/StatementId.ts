@@ -14,6 +14,9 @@ export enum StatementId {
     Eq = 'eq',
     Gt = 'gt',
 
+    ForEachTile = 'for-each-tile',
+
+
     // Statements
     IfStatement = "if-statement",
     BlockStatement = "block-statement",

@@ -1,7 +1,5 @@
 import {StatementId} from "@/language/StatementId";
-import {Puzzle} from "@/puzzles/Puzzle";
 import {NumberType} from "@/language/types/NumberType";
-import {AbstractExpression} from "@/language/AbstractExpression";
 import {NullaryFunction} from "@/language/functions/NullaryFunction";
 
 /**
@@ -11,11 +9,11 @@ import {NullaryFunction} from "@/language/functions/NullaryFunction";
 export class EdgeGroupCountFunction extends NullaryFunction {
     id = StatementId.EdgeGroupCountFunction;
 
-    constructor(arg: AbstractExpression) {
-        super("EdgeGroupCount", []);
+    constructor() {
+        super("EdgeGroupCount");
     }
 
-    evaluate(puzzle: Puzzle): NumberType {
+    evaluate(): NumberType {
         return new NumberType(3);
     }
 

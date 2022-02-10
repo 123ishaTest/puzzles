@@ -4,13 +4,13 @@ import {NullaryFunction} from "@/language/functions/NullaryFunction";
 import {Memory} from "@/language/memory/Memory";
 
 /**
- * Counts the number of edges a given tile has active.
+ * Returns the value of the given tile
  */
-export class EdgeCountFunction extends NullaryFunction {
+export class TileValueFunction extends NullaryFunction {
     id = StatementId.EdgeCountFunction;
 
     constructor() {
-        super("EdgeCount");
+        super("TileValue");
     }
 
     evaluate(memory: Memory): NumberType {
@@ -20,14 +20,7 @@ export class EdgeCountFunction extends NullaryFunction {
             throw new PuzzleDataNotSetError(`Tile not set for ${this.id} function`)
         }
 
-        let sum = 0;
-        tile.getNeighbouringEdges().forEach(edge => {
-            if (edge.value) {
-                sum++;
-            }
-        })
-
-        return new NumberType(sum);
+        return new NumberType(tile.value);
     }
 
 }

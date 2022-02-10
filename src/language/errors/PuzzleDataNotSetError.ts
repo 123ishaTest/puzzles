@@ -1,0 +1,2 @@
+class PuzzleDataNotSetError extends Error {
+}

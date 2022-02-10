@@ -1,10 +1,10 @@
-import {AbstractConstraint} from "@/puzzles/constraints/AbstractConstraint";
 import {Tile} from "@/puzzles/Tile";
 import {Edge} from "@/puzzles/Edge";
 import {Corner} from "@/puzzles/Corner";
 import {PuzzleConfig} from "@/puzzles/instances/PuzzleConfig";
 import {InstanceConfig, TileClue} from "@/puzzles/instances/InstanceConfig";
 import {Cell} from "@/puzzles/Cell";
+import {AbstractExpression} from "@/language/AbstractExpression";
 
 export class Puzzle {
     // Config
@@ -17,7 +17,7 @@ export class Puzzle {
     gridHeight: number;
     gridWidth: number;
 
-    constraints: AbstractConstraint[] = [];
+    constraints: AbstractExpression[] = [];
     grid: (Tile | Edge | Corner)[][];
 
     constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
@@ -114,12 +114,12 @@ export class Puzzle {
         }
     }
 
-    public addConstraint(constraint: AbstractConstraint): this {
+    public addConstraint(constraint: AbstractExpression): this {
         this.constraints.push(constraint);
         return this;
     }
 
-    public setConstraints(constraints: AbstractConstraint[]): this {
+    public setConstraints(constraints: AbstractExpression[]): this {
         this.constraints = constraints;
         return this;
     }
@@ -143,7 +143,9 @@ export class Puzzle {
 
     isValid(): boolean {
         for (const constraint of this.constraints) {
-            const isValid = constraint.isValid(this);
+            const isValid = constraint.evaluate({
+                puzzle: this,
+            }).value;
             if (!isValid) {
                 return false;
             }
@@ -171,5 +173,15 @@ export class Puzzle {
             return;
         }
         tile.setValue(number);
+    }
+
+    getTiles(): Tile[] {
+        const tiles = [];
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                tiles.push(this.getTile(x, y));
+            }
+        }
+        return tiles;
     }
 }

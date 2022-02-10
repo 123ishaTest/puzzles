@@ -1,7 +1,7 @@
 import {AbstractStatement} from "@/language/AbstractStatement";
 import {AbstractType} from "@/language/types/AbstractType";
-import {Puzzle} from "@/puzzles/Puzzle";
+import {Memory} from "@/language/memory/Memory";
 
 export abstract class AbstractExpression extends AbstractStatement {
-    abstract evaluate(puzzle: Puzzle): AbstractType
+    abstract evaluate(memory: Memory): AbstractType
 }
