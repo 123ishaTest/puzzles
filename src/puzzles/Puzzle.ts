@@ -4,7 +4,7 @@ import {Corner} from "@/puzzles/Corner";
 import {PuzzleConfig} from "@/puzzles/instances/PuzzleConfig";
 import {InstanceConfig, TileClue} from "@/puzzles/instances/InstanceConfig";
 import {Cell} from "@/puzzles/Cell";
-import {AbstractExpression} from "@/language/AbstractExpression";
+import {PuzzleRule} from "@/puzzles/PuzzleRule";
 
 export class Puzzle {
     // Config
@@ -17,7 +17,7 @@ export class Puzzle {
     gridHeight: number;
     gridWidth: number;
 
-    constraints: AbstractExpression[] = [];
+    rules: PuzzleRule[] = [];
     grid: (Tile | Edge | Corner)[][];
 
     constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
@@ -26,9 +26,9 @@ export class Puzzle {
         this.editEdges = puzzleConfig.editEdges ?? false;
         this.editCorners = puzzleConfig.editCorners ?? false;
 
-        // Add constraints
-        if (puzzleConfig.constraints) {
-            this.setConstraints(puzzleConfig.constraints);
+        // Add rules
+        if (puzzleConfig.rules) {
+            this.setRules(puzzleConfig.rules);
         }
 
         // Initialize grid
@@ -118,13 +118,8 @@ export class Puzzle {
         }
     }
 
-    public addConstraint(constraint: AbstractExpression): this {
-        this.constraints.push(constraint);
-        return this;
-    }
-
-    public setConstraints(constraints: AbstractExpression[]): this {
-        this.constraints = constraints;
+    public setRules(rules: PuzzleRule[]): this {
+        this.rules = rules;
         return this;
     }
 
@@ -146,11 +141,11 @@ export class Puzzle {
     }
 
     isSolved(): boolean {
-        for (const constraint of this.constraints) {
-            const isSolved = constraint.evaluate({
+        for (const rule of this.rules) {
+            const isSatisfied = rule.isSatisfied({
                 puzzle: this,
-            }).value;
-            if (!isSolved) {
+            });
+            if (!isSatisfied) {
                 return false;
             }
         }

@@ -1,8 +1,8 @@
-import {AbstractExpression} from "@/language/AbstractExpression";
+import {PuzzleRule} from "@/puzzles/PuzzleRule";
 
 export interface PuzzleConfig {
     editTiles?: boolean;
     editEdges?: boolean;
     editCorners?: boolean;
-    constraints?: AbstractExpression[];
+    rules?: PuzzleRule[];
 }
