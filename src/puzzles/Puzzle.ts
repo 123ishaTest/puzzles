@@ -21,7 +21,7 @@ export class Puzzle {
     gridWidth: number;
 
     rules: PuzzleRule[] = [];
-    grid: (Tile | Edge | Corner)[][];
+    grid: Cell[][];
 
     constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
         // Process puzzleConfig
@@ -174,7 +174,7 @@ export class Puzzle {
     }
 
     toggleEdgeDisable(edge: Edge): void {
-        if (!this.editEdges || edge.isLocked) {
+        if (!this.editEdges || edge.isLocked || edge.value) {
             return;
         }
         edge.toggleDisabled();
@@ -212,5 +212,21 @@ export class Puzzle {
             }
         }
         return corners;
+    }
+
+    getEdges(): Edge[] {
+        const edges: Edge[] = [];
+        for (let y = 0; y < this.gridHeight; y++) {
+            for (let x = 0; x < this.gridWidth; x++) {
+                if (y % 2 === 0 && x % 2 === 0) {
+                    // Empty
+                } else if (y % 2 === 1 && x % 2 === 1) {
+                    // Empty
+                } else {
+                    edges.push(this.grid[y][x] as Edge)
+                }
+            }
+        }
+        return edges;
     }
 }

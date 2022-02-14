@@ -1,6 +1,6 @@
 export enum StatementId {
 
-    // Literals,
+    // Literals
     BooleanLiteral = 'boolean-literal',
     NumberLiteral = 'number-literal',
     NoneLiteral = 'none-literal',
@@ -23,6 +23,7 @@ export enum StatementId {
     AllFilter = 'all',
     NoneFilter = 'none',
     TileHasNumericValueFilter = 'tile-has-numeric-value',
+    EdgeIsActiveFilter = 'edge-is-active',
 
     // Statements
     IfStatement = "if-statement",

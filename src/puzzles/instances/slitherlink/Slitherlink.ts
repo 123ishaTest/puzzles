@@ -2,16 +2,17 @@ import {Puzzle} from "@/puzzles/Puzzle";
 import {InstanceConfig} from "@/puzzles/instances/InstanceConfig";
 import {ForEachTile} from "@/language/lists/ForEachTile";
 import {Eq} from "@/language/logic/Eq";
-import {TileEdgeCountFunction} from "@/language/functions/builtins/TileEdgeCountFunction";
-import {TileValueFunction} from "@/language/functions/builtins/TileValueFunction";
+import {TileEdgeCountFunction} from "@/language/functions/tile/TileEdgeCountFunction";
+import {TileValueFunction} from "@/language/functions/tile/TileValueFunction";
 import {TileHasNumericValueFilter} from "@/language/lists/filters/TileHasNumericValueFilter";
 import {AllFilter} from "@/language/lists/filters/AllFilter";
 import {NumberLiteral} from "@/language/literals/NumberLiteral";
 import {ForEachCorner} from "@/language/lists/ForEachCorner";
 import {Or} from "@/language/logic/Or";
-import {CornerEdgeCountFunction} from "@/language/functions/builtins/CornerEdgeCountFunction";
+import {CornerEdgeCountFunction} from "@/language/functions/corner/CornerEdgeCountFunction";
 import {PuzzleRule} from "@/puzzles/PuzzleRule";
 import {SlitherlinkRule} from "@/puzzles/instances/slitherlink/SlitherlinkRule";
+import {EdgeGroupCountFunction} from "@/language/functions/edge/EdgeGroupCountFunction";
 
 export class Slitherlink extends Puzzle {
 
@@ -38,8 +39,7 @@ export class Slitherlink extends Puzzle {
                         ),
                     ),
                     new PuzzleRule(SlitherlinkRule.SingleLoop, "The path should be a single loop",
-                        new Eq(new NumberLiteral(1), new NumberLiteral(1)),
-                        // new Eq(new EdgeGroupCount(), new NumberLiteral(1)),
+                        new Eq(new EdgeGroupCountFunction(), new NumberLiteral(1)),
                     ),
                 ],
             }

@@ -69,33 +69,6 @@ describe('Slitherlink', () => {
         // Act
         const isSolved = slitherLink.isSolved();
 
-        slitherLink.disableRule(SlitherlinkRule.TileValueEqualsEdgeCount)
-        const isSolvedWithoutRule = slitherLink.isSolved();
-
-        // Assert
-        expect(isSolved).toBe(false);
-        expect(isSolvedWithoutRule).toBe(true);
-    })
-
-    it('exists of a single edge group', () => {
-        // Arrange
-        slitherLink.getTile(0, 0).northEdge.toggle();
-        slitherLink.getTile(0, 0).westEdge.toggle();
-        slitherLink.getTile(0, 0).southEdge.toggle();
-        slitherLink.getTile(1, 0).southEdge.toggle();
-        slitherLink.getTile(1, 0).eastEdge.toggle();
-        slitherLink.getTile(1, 0).northEdge.toggle();
-
-        slitherLink.getTile(1, 2).northEdge.toggle();
-        slitherLink.getTile(1, 2).westEdge.toggle();
-        slitherLink.getTile(1, 2).southEdge.toggle();
-        slitherLink.getTile(2, 2).southEdge.toggle();
-        slitherLink.getTile(2, 2).eastEdge.toggle();
-        slitherLink.getTile(2, 2).northEdge.toggle();
-
-        // Act
-        const isSolved = slitherLink.isSolved();
-
         slitherLink.disableRule(SlitherlinkRule.SingleLoop)
         const isSolvedWithoutRule = slitherLink.isSolved();
 

@@ -25,6 +25,12 @@ export class Corner extends Cell {
         }) as Edge[];
     }
 
+    getActiveNeighbouringEdges(): Edge[] {
+        return this.getNeighbouringEdges().filter(edge => {
+            return edge.value === true;
+        })
+    }
+
     northEastTile?: Tile
     southEastTile?: Tile
     southWestTile?: Tile
