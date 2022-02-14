@@ -8,10 +8,13 @@ import {PuzzleRule} from "@/puzzles/PuzzleRule";
 
 export class Puzzle {
     // Config
+    name: string;
+    description: string;
     editTiles: boolean;
     editEdges: boolean;
     editCorners: boolean;
 
+    // Instance
     height: number;
     width: number;
     gridHeight: number;
@@ -22,10 +25,12 @@ export class Puzzle {
 
     constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
         // Process puzzleConfig
-        this.editTiles = puzzleConfig.editTiles ?? true;
+        this.name = puzzleConfig.name;
+        this.description = puzzleConfig.description;
+
+        this.editTiles = puzzleConfig.editTiles ?? false;
         this.editEdges = puzzleConfig.editEdges ?? false;
         this.editCorners = puzzleConfig.editCorners ?? false;
-
         // Add rules
         if (puzzleConfig.rules) {
             this.setRules(puzzleConfig.rules);
@@ -121,6 +126,14 @@ export class Puzzle {
     public setRules(rules: PuzzleRule[]): this {
         this.rules = rules;
         return this;
+    }
+
+    public disableRule(id: string): void {
+        const rule = this.rules.find(rule => rule.id === id);
+        if (rule) {
+            const index = this.rules.indexOf(rule);
+            this.rules.splice(index, 1);
+        }
     }
 
     public getTile(x: number, y: number): Tile {

@@ -11,24 +11,24 @@ import {ForEachCorner} from "@/language/lists/ForEachCorner";
 import {Or} from "@/language/logic/Or";
 import {CornerEdgeCountFunction} from "@/language/functions/builtins/CornerEdgeCountFunction";
 import {PuzzleRule} from "@/puzzles/PuzzleRule";
-import {SlitherlinkRules} from "@/puzzles/instances/slitherlink/SlitherlinkRules";
+import {SlitherlinkRule} from "@/puzzles/instances/slitherlink/SlitherlinkRule";
 
 export class Slitherlink extends Puzzle {
 
     constructor(instanceConfig: InstanceConfig) {
         super(instanceConfig,
             {
-                editTiles: false,
+                name: "Slitherlink",
+                description: "The objective is to connect horizontally and vertically adjacent dots so that the lines form a simple loop with no loose ends. In addition, the number inside a square represents how many of its four sides are segments in the loop.",
                 editEdges: true,
-                editCorners: false,
                 rules: [
-                    new PuzzleRule(SlitherlinkRules.TileValueEqualsEdgeCount, "The number of edges around a tile must equal the number in the tile",
+                    new PuzzleRule(SlitherlinkRule.TileValueEqualsEdgeCount, "The number of edges around a tile must equal the number in the tile",
                         new ForEachTile(
                             new TileHasNumericValueFilter(),
                             new Eq(new TileEdgeCountFunction(), new TileValueFunction())
                         ),
                     ),
-                    new PuzzleRule(SlitherlinkRules.EdgeCornerCountIsEven, "Each corner must have 0 or 2 connected edges",
+                    new PuzzleRule(SlitherlinkRule.EdgeCornerCountIsEven, "Each corner must have 0 or 2 connected edges",
                         new ForEachCorner(
                             new AllFilter(),
                             new Or(
@@ -37,11 +37,11 @@ export class Slitherlink extends Puzzle {
                             ),
                         ),
                     ),
-                    new PuzzleRule(SlitherlinkRules.SingleLoop, "The path should be a single loop",
+                    new PuzzleRule(SlitherlinkRule.SingleLoop, "The path should be a single loop",
                         new Eq(new NumberLiteral(1), new NumberLiteral(1)),
                         // new Eq(new EdgeGroupCount(), new NumberLiteral(1)),
                     ),
-                ]
+                ],
             }
         );
     }
