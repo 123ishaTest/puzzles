@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/2 bg-gray-400 m-4 p-8">
+  <div class="w-1/2 bg-gray-400 m-4 p-8 select-none" @contextmenu.prevent>
     <div class="text-2xl font-semibold">{{ puzzle.name }}</div>
     <hr>
     <p>{{ puzzle.description }}</p>

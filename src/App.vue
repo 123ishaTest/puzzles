@@ -19,13 +19,23 @@ export default defineComponent({
   data() {
     return {
       puzzle: new Slitherlink({
-        width: 3,
-        height: 3,
+        width: 5,
+        height: 5,
         tileClues: [
-          {x: 0, y: 0, value: 3},
-          {x: 2, y: 0, value: 1},
-          {x: 2, y: 2, value: 3},
-          {x: 0, y: 2, value: 1},
+          {x: 1, y: 0, value: 1},
+          {x: 2, y: 0, value: 2},
+          {x: 3, y: 0, value: 2},
+          {x: 4, y: 0, value: 3},
+          {x: 0, y: 1, value: 3},
+          {x: 1, y: 1, value: 2},
+          {x: 4, y: 1, value: 2},
+          {x: 0, y: 2, value: 3},
+          {x: 1, y: 2, value: 0},
+          {x: 2, y: 2, value: 2},
+          {x: 4, y: 2, value: 2},
+          {x: 0, y: 3, value: 3},
+          {x: 4, y: 3, value: 2},
+          {x: 1, y: 4, value: 1},
         ]
       })
     }

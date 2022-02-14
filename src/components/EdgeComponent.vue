@@ -2,7 +2,6 @@
   <div
       @click="leftClick"
       @click.right="rightClick"
-      @contextmenu.prevent
       :class="dimensions + ' ' + edgeColor"
       class="flex flex-row justify-center items-center"
   >
