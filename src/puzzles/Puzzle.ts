@@ -50,7 +50,7 @@ export class Puzzle {
                 if (y % 2 === 0 && x % 2 === 0) {
                     row.push(new Corner())
                 } else if (y % 2 === 1 && x % 2 === 1) {
-                    row.push(new Tile(''))
+                    row.push(new Tile())
                 } else {
                     row.push(new Edge(y % 2 === 0))
                 }

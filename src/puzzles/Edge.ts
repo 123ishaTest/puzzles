@@ -1,18 +1,17 @@
 import {Corner} from "@/puzzles/Corner";
 import {Tile} from "@/puzzles/Tile";
+import {Cell} from "@/puzzles/Cell";
 
-export class Edge {
-    value = false;
-
+export class Edge extends Cell {
     isHorizontal: boolean;
 
-
     constructor(isHorizontal: boolean) {
+        super();
         this.isHorizontal = isHorizontal;
     }
 
     toggle(): void {
-        this.value = !this.value;
+        this._value = !this._value;
     }
 
     firstCorner!: Corner

@@ -1,20 +1,12 @@
 import {Corner} from "@/puzzles/Corner";
 import {Edge} from "@/puzzles/Edge";
+import {Cell} from "@/puzzles/Cell";
 
-export class Tile {
-    private _value: any;
+export class Tile extends Cell {
 
-    constructor(value: any) {
-        this._value = value;
-    }
-
-
-    get value(): any {
-        return this._value;
-    }
-
-    setValue(number: number): void {
-        this._value = number;
+    constructor() {
+        super();
+        this._value = '';
     }
 
     northEastCorner!: Corner

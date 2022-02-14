@@ -1,17 +1,18 @@
 import {Edge} from "@/puzzles/Edge";
 import {Tile} from "@/puzzles/Tile";
+import {Cell} from "@/puzzles/Cell";
 
-export class Corner {
-    value = false;
+export class Corner extends Cell {
 
     toggle(): void {
-        this.value = !this.value;
+        this._value = !this._value;
     }
 
     northEdge?: Edge;
     eastEdge?: Edge;
     southEdge?: Edge;
     westEdge?: Edge;
+
 
     getNeighbouringEdges(): Edge[] {
         return [

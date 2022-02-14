@@ -1,5 +1,13 @@
-import {Corner} from "@/puzzles/Corner";
-import {Edge} from "@/puzzles/Edge";
-import {Tile} from "@/puzzles/Tile";
+export abstract class Cell {
+    protected _value: any;
+    isLocked = false;
 
-export type Cell = Corner | Edge | Tile;
+
+    get value(): any {
+        return this._value;
+    }
+
+    setValue(number: number): void {
+        this._value = number;
+    }
+}
