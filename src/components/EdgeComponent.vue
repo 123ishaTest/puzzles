@@ -1,5 +1,13 @@
 <template>
-  <div @click="click" :class="dimensions + ' ' + edgeColor"></div>
+  <div
+      @click="leftClick"
+      @click.right="rightClick"
+      @contextmenu.prevent
+      :class="dimensions + ' ' + edgeColor"
+      class="flex flex-row justify-center items-center"
+  >
+    <span v-if="edge.isDisabled">x</span>
+  </div>
 </template>
 
 <script lang="ts">
@@ -23,9 +31,12 @@ export default defineComponent({
     }
   },
   methods: {
-    click(): void {
-      this.$emit('edge', this.edge);
-    }
+    leftClick(): void {
+      this.$emit('edgeLeft', this.edge);
+    },
+    rightClick(): void {
+      this.$emit('edgeRight', this.edge);
+    },
   },
 });
 </script>

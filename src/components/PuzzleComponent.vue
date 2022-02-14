@@ -22,7 +22,11 @@
             <corner-component @corner="cornerClicked" v-if="y % 2 === 0 && x % 2 === 0"
                               :corner="cell"></corner-component>
             <tile-component @tile="tileClicked" v-else-if="y % 2 === 1 && x % 2 === 1" :tile="cell"></tile-component>
-            <edge-component @edge="edgeClicked" v-else :edge="cell"></edge-component>
+            <edge-component
+                v-else :edge="cell"
+                @edgeLeft="edgeLeftClicked"
+                @edgeRight="edgeRightClicked"
+            ></edge-component>
           </div>
         </div>
       </div>
@@ -64,9 +68,12 @@ export default defineComponent({
       this.puzzle.setTileValue(tile, 3);
       this.checkIsSolved();
     },
-    edgeClicked(edge: Edge) {
+    edgeLeftClicked(edge: Edge) {
       this.puzzle.toggleEdge(edge);
       this.checkIsSolved();
+    },
+    edgeRightClicked(edge: Edge) {
+      this.puzzle.toggleEdgeDisable(edge);
     },
     cornerClicked(corner: Corner) {
       this.puzzle.toggleCorner(corner);

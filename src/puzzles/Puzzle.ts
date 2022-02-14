@@ -110,7 +110,7 @@ export class Puzzle {
         // Add clues
         if (instanceConfig.tileClues) {
             instanceConfig.tileClues.forEach((tileClue: TileClue) => {
-                this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value);
+                this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value).setIsLocked(true);
             })
         }
     }
@@ -167,10 +167,17 @@ export class Puzzle {
     }
 
     toggleEdge(edge: Edge): void {
-        if (!this.editEdges) {
+        if (!this.editEdges || edge.isLocked || edge.isDisabled) {
             return;
         }
         edge.toggle();
+    }
+
+    toggleEdgeDisable(edge: Edge): void {
+        if (!this.editEdges || edge.isLocked) {
+            return;
+        }
+        edge.toggleDisabled();
     }
 
     toggleCorner(corner: Corner): void {
