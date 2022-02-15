@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen justify-center">
+  <div class="flex flex-col justify-center">
     <div class="flex flex-row justify-center">
       <puzzle-interface-component :puzzle-interface="puzzleInterface"></puzzle-interface-component>
     </div>
