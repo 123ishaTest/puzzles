@@ -28,7 +28,6 @@
       </div>
 
     </div>
-    <p>Is solved: {{ isSolved }}</p>
   </div>
 </template>
 
