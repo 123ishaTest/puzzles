@@ -24,18 +24,16 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {PuzzleSolver} from "@/puzzles/PuzzleSolver";
+import {PuzzleInterface} from "@/puzzles/PuzzleInterface";
 import PuzzleComponent from "@/components/PuzzleComponent.vue";
 import {Edge} from "@/puzzles/Edge";
-import {ToggleEdgeCommand} from "@/puzzles/commands/ToggleEdgeCommand";
-import {DisableEdgeCommand} from "@/puzzles/commands/DisableEdgeCommand";
 
 export default defineComponent({
   name: 'PuzzleSolverComponent',
   components: {PuzzleComponent},
   props: {
     puzzleSolver: {
-      type: PuzzleSolver,
+      type: PuzzleInterface,
       required: true,
     }
   },
@@ -63,15 +61,12 @@ export default defineComponent({
       this.isSolved = this.puzzle.isSolved()
     },
     edgeLeftClicked(edge: Edge) {
-      this.puzzleSolver.do(new ToggleEdgeCommand(
-          this.puzzle, edge
-      ));
+      this.puzzleSolver.performEdgeClickAction(edge, true);
       this.checkIsSolved();
     },
     edgeRightClicked(edge: Edge) {
-      this.puzzleSolver.do(new DisableEdgeCommand(
-          this.puzzle, edge
-      ));
+      this.puzzleSolver.performEdgeClickAction(edge, false);
+      this.checkIsSolved();
     },
   },
 });

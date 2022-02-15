@@ -13,6 +13,7 @@ import {CornerEdgeCountFunction} from "@/language/functions/corner/CornerEdgeCou
 import {PuzzleRule} from "@/puzzles/PuzzleRule";
 import {SlitherlinkRule} from "@/puzzles/instances/slitherlink/SlitherlinkRule";
 import {EdgeGroupCountFunction} from "@/language/functions/edge/EdgeGroupCountFunction";
+import {EdgeClickedAction} from "@/puzzles/interface/EdgeClickedAction";
 
 export class Slitherlink extends Puzzle {
 
@@ -42,6 +43,10 @@ export class Slitherlink extends Puzzle {
                         new Eq(new EdgeGroupCountFunction(), new NumberLiteral(1)),
                     ),
                 ],
+                solvingConfig: {
+                    edgeLeftClicked: EdgeClickedAction.ToggleEdgeValue,
+                    edgeRightClicked: EdgeClickedAction.ToggleEdgeDisabled,
+                }
             }
         );
     }

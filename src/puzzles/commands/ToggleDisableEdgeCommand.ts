@@ -2,7 +2,7 @@ import {AbstractCommand} from "@/puzzles/commands/AbstractCommand";
 import {Puzzle} from "@/puzzles/Puzzle";
 import {Edge} from "@/puzzles/Edge";
 
-export class DisableEdgeCommand extends AbstractCommand {
+export class ToggleDisableEdgeCommand extends AbstractCommand {
     private _edge: Edge;
 
 

@@ -8,6 +8,7 @@ import {PuzzleRule} from "@/puzzles/PuzzleRule";
 
 export class Puzzle {
     // Config
+    puzzleConfig: PuzzleConfig;
     name: string;
     description: string;
     editTiles: boolean;
@@ -25,6 +26,7 @@ export class Puzzle {
 
     constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
         // Process puzzleConfig
+        this.puzzleConfig = puzzleConfig;
         this.name = puzzleConfig.name;
         this.description = puzzleConfig.description;
 
