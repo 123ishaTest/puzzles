@@ -31,10 +31,10 @@ export default defineComponent({
   },
   methods: {
     leftClick(): void {
-      this.$emit('edgeLeft', this.edge);
+      this.$parent?.$emit('edgeLeft', this.edge);
     },
     rightClick(): void {
-      this.$emit('edgeRight', this.edge);
+      this.$parent?.$emit('edgeRight', this.edge);
     },
   },
 });

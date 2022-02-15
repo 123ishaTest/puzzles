@@ -22,11 +22,7 @@
             <corner-component @corner="cornerClicked" v-if="y % 2 === 0 && x % 2 === 0"
                               :corner="cell"></corner-component>
             <tile-component @tile="tileClicked" v-else-if="y % 2 === 1 && x % 2 === 1" :tile="cell"></tile-component>
-            <edge-component
-                v-else :edge="cell"
-                @edgeLeft="edgeLeftClicked"
-                @edgeRight="edgeRightClicked"
-            ></edge-component>
+            <edge-component v-else :edge="cell"></edge-component>
           </div>
         </div>
       </div>
@@ -43,7 +39,6 @@ import TileComponent from "@/components/TileComponent.vue";
 import EdgeComponent from "@/components/EdgeComponent.vue";
 import CornerComponent from "@/components/CornerComponent.vue";
 import {Tile} from "@/puzzles/Tile";
-import {Edge} from "@/puzzles/Edge";
 import {Corner} from "@/puzzles/Corner";
 
 export default defineComponent({
@@ -67,13 +62,6 @@ export default defineComponent({
     tileClicked(tile: Tile) {
       this.puzzle.setTileValue(tile, 3);
       this.checkIsSolved();
-    },
-    edgeLeftClicked(edge: Edge) {
-      this.puzzle.toggleEdge(edge);
-      this.checkIsSolved();
-    },
-    edgeRightClicked(edge: Edge) {
-      this.puzzle.toggleEdgeDisable(edge);
     },
     cornerClicked(corner: Corner) {
       this.puzzle.toggleCorner(corner);

@@ -16,11 +16,11 @@ export abstract class Cell {
         return this._value;
     }
 
-    setValue(number: number): this {
+    setValue(value: any): this {
         if (this._isLocked || this._isDisabled) {
             return this;
         }
-        this._value = number;
+        this._value = value;
         return this;
     }
 

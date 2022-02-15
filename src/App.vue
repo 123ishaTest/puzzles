@@ -1,24 +1,25 @@
 <template>
   <div class="flex flex-col h-screen justify-center">
     <div class="flex flex-row justify-center">
-      <puzzle-component :puzzle="puzzle"></puzzle-component>
+      <puzzle-solver-component :puzzle-solver="solver"></puzzle-solver-component>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import PuzzleComponent from "@/components/PuzzleComponent.vue";
 import {Slitherlink} from "@/puzzles/instances/slitherlink/Slitherlink";
+import {PuzzleSolver} from "@/puzzles/PuzzleSolver";
+import PuzzleSolverComponent from "@/components/PuzzleSolverComponent.vue";
 
 export default defineComponent({
   name: 'App',
   components: {
-    PuzzleComponent,
+    PuzzleSolverComponent,
   },
   data() {
     return {
-      puzzle: new Slitherlink({
+      solver: new PuzzleSolver(new Slitherlink({
         width: 5,
         height: 5,
         tileClues: [
@@ -37,7 +38,7 @@ export default defineComponent({
           {x: 4, y: 3, value: 2},
           {x: 1, y: 4, value: 1},
         ]
-      })
+      })),
     }
   },
 });
