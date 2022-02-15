@@ -1,20 +1,21 @@
 <template>
   <div>
     <div class="flex flex-row">
-    <puzzle-component :puzzle="puzzle"
-                      @edgeLeft="edgeLeftClicked"
-                      @edgeRight="edgeRightClicked"
-    ></puzzle-component>
-    <div class="flex flex-col p-4">
-      <div class="flex flex-row flex-wrap justify-items-stretch">
-        <button @click="undo" class="btn btn-red">Undo</button>
-        <button @click="redo" class="btn btn-green">Redo</button>
+      <puzzle-component :puzzle="puzzle"
+                        @edgeLeft="edgeLeftClicked"
+                        @edgeRight="edgeRightClicked"
+      ></puzzle-component>
+      <div class="flex flex-col p-4 max-h-96 overflow-y-scroll">
+        <div class="flex flex-row flex-wrap justify-items-stretch">
+          <button @click="undo" class="btn btn-red">Undo</button>
+          <button @click="redo" class="btn btn-green">Redo</button>
+        </div>
+        <div v-for="(command, index) in commands" :key="command.toString()">
+          <p>{{ command.toString() }}</p>
+          <hr class="border-2 border-black"
+              v-if="puzzleSolver.commands.index === puzzleSolver.commands.commands.length - index-1">
+        </div>
       </div>
-      <div v-for="(command, index) in commands" :key="command.toString()">
-        <p>{{ command.toString() }}</p>
-        <hr class="border-2 border-black" v-if="puzzleSolver.commands.index === index+1">
-      </div>
-    </div>
     </div>
   </div>
 </template>
@@ -25,6 +26,7 @@ import {PuzzleSolver} from "@/puzzles/PuzzleSolver";
 import PuzzleComponent from "@/components/PuzzleComponent.vue";
 import {Edge} from "@/puzzles/Edge";
 import {ToggleEdgeCommand} from "@/puzzles/commands/ToggleEdgeCommand";
+import {DisableEdgeCommand} from "@/puzzles/commands/DisableEdgeCommand";
 
 export default defineComponent({
   name: 'PuzzleSolverComponent',
@@ -45,7 +47,7 @@ export default defineComponent({
       return this.puzzleSolver.puzzle
     },
     commands() {
-      return this.puzzleSolver.commands.commands;
+      return this.puzzleSolver.commands.commands.slice().reverse();
     }
   },
   methods: {
@@ -65,7 +67,9 @@ export default defineComponent({
       this.checkIsSolved();
     },
     edgeRightClicked(edge: Edge) {
-      this.puzzle.toggleEdgeDisable(edge);
+      this.puzzleSolver.do(new DisableEdgeCommand(
+          this.puzzle, edge
+      ));
     },
   },
 });
