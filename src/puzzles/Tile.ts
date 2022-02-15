@@ -4,9 +4,12 @@ import {Cell} from "@/puzzles/Cell";
 
 export class Tile extends Cell {
 
-    constructor() {
+    allowedValues: any[];
+
+    constructor(allowedValues: any[]) {
         super();
         this._value = '';
+        this.allowedValues = allowedValues;
     }
 
     northEastCorner!: Corner
