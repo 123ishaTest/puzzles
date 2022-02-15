@@ -22,7 +22,6 @@ export class Slitherlink extends Puzzle {
             {
                 name: "Slitherlink",
                 description: "The objective is to connect horizontally and vertically adjacent dots so that the lines form a simple loop with no loose ends. In addition, the number inside a square represents how many of its four sides are segments in the loop.",
-                editEdges: true,
                 tileValues: ['', 0, 1, 2, 3],
                 rules: [
                     new PuzzleRule(SlitherlinkRule.TileValueEqualsEdgeCount, "The number of edges around a tile must equal the number in the tile",
@@ -61,6 +60,8 @@ export class Slitherlink extends Puzzle {
     }
 
     import(data: string): void {
+        this.initializeGrid();
+        console.log("importing slitherlink")
         this.importTiles(data);
     }
 

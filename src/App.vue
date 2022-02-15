@@ -20,11 +20,13 @@ export default defineComponent({
   },
   data() {
     return {
-      puzzleInterface: new PuzzleInterface(new Slitherlink({
+      puzzleInterface: new PuzzleInterface(
+          new Slitherlink({
             width: 5,
             height: 5,
           }),
-          PuzzleInterfaceMode.Editing),
+          PuzzleInterfaceMode.Solving,
+      ),
     }
   },
 });

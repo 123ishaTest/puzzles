@@ -20,8 +20,12 @@ export class PuzzleInterface {
     constructor(puzzle: Puzzle, mode: PuzzleInterfaceMode) {
         this.puzzle = puzzle;
         this.mode = mode;
-        this.config = mode === PuzzleInterfaceMode.Solving ? puzzle.puzzleConfig.solvingConfig : puzzle.puzzleConfig.editingConfig;
+        this.config = this.loadConfig();
         this.commands = new CommandHistory();
+    }
+
+    private loadConfig(): InterfaceConfig {
+        return this.mode === PuzzleInterfaceMode.Solving ? this.puzzle.puzzleConfig.solvingConfig : this.puzzle.puzzleConfig.editingConfig;
     }
 
     public performEdgeClickAction(edge: Edge, left: boolean): void {
@@ -40,6 +44,18 @@ export class PuzzleInterface {
             case TileClickedAction.CycleThroughValues:
                 return this.do(new CycleThroughTileValuesCommand(this.puzzle, tile));
         }
+    }
+
+    public switchMode(): void {
+        const puzzleData = this.puzzle.export();
+        if (this.mode === PuzzleInterfaceMode.Solving) {
+            this.mode = PuzzleInterfaceMode.Editing;
+        } else {
+            this.mode = PuzzleInterfaceMode.Solving;
+        }
+        this.config = this.loadConfig();
+        this.commands = new CommandHistory();
+        this.import(puzzleData);
     }
 
     private do(command: AbstractCommand): void {

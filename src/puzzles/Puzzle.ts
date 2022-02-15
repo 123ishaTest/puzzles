@@ -11,9 +11,6 @@ export class Puzzle {
     puzzleConfig: PuzzleConfig;
     name: string;
     description: string;
-    editTiles: boolean;
-    editEdges: boolean;
-    editCorners: boolean;
 
     // Instance
     height: number;
@@ -30,9 +27,6 @@ export class Puzzle {
         this.name = puzzleConfig.name;
         this.description = puzzleConfig.description;
 
-        this.editTiles = puzzleConfig.editTiles ?? false;
-        this.editEdges = puzzleConfig.editEdges ?? false;
-        this.editCorners = puzzleConfig.editCorners ?? false;
         // Add rules
         if (puzzleConfig.rules) {
             this.setRules(puzzleConfig.rules);
@@ -55,11 +49,11 @@ export class Puzzle {
 
     private loadTileClues(clues: TileClue[]) {
         clues.forEach((tileClue: TileClue) => {
-            this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value).setIsLocked(true);
+            this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value);
         })
     }
 
-    private initializeGrid() {
+    protected initializeGrid(): void {
         this.grid = [];
         for (let y = 0; y < this.gridHeight; y++) {
             const row = [];
@@ -177,30 +171,24 @@ export class Puzzle {
     }
 
     toggleEdge(edge: Edge): void {
-        if (!this.editEdges || edge.isLocked || edge.isDisabled) {
+        if (edge.isLocked || edge.isDisabled) {
             return;
         }
         edge.toggle();
     }
 
     toggleEdgeDisable(edge: Edge): void {
-        if (!this.editEdges || edge.isLocked || edge.value) {
+        if (edge.isLocked || edge.value) {
             return;
         }
         edge.toggleDisabled();
     }
 
     toggleCorner(corner: Corner): void {
-        if (!this.editCorners) {
-            return;
-        }
         corner.toggle();
     }
 
     setTileValue(tile: Tile, number: number): void {
-        if (!this.editTiles) {
-            return;
-        }
         tile.setValue(number);
     }
 
@@ -267,7 +255,6 @@ export class Puzzle {
             const value = Number.parseInt(values[2]);
             clues.push({x, y, value})
         }
-        this.initializeGrid();
         this.loadTileClues(clues);
     }
 

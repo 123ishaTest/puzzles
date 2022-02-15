@@ -20,10 +20,11 @@
       </div>
     </div>
     <p>Is solved: {{ isSolved }}</p>
-    <p>Mode: {{puzzleInterface.mode}}</p>
+    <p>Mode: {{ puzzleInterface.mode }}</p>
     <button @click="exportPuzzle" class="btn btn-blue">Export!</button>
-    <button @click="importPuzzle" class="btn btn-green">Import!</button>
     <input class="input-primary" v-model="exportValue">
+    <button @click="importPuzzle" class="btn btn-red">Import!</button>
+    <button @click="switchMode" class="btn btn-green">{{ isSolving ? 'Edit' : 'Play' }}</button>
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import {PuzzleInterface} from "@/puzzles/PuzzleInterface";
 import PuzzleComponent from "@/components/PuzzleComponent.vue";
 import {Edge} from "@/puzzles/Edge";
 import {Tile} from "@/puzzles/Tile";
+import {PuzzleInterfaceMode} from "@/puzzles/PuzzleInterfaceMode";
 
 export default defineComponent({
   name: 'PuzzleInterfaceComponent',
@@ -50,6 +52,9 @@ export default defineComponent({
     }
   },
   computed: {
+    isSolving(): boolean {
+      return this.puzzleInterface.mode === PuzzleInterfaceMode.Solving;
+    },
     puzzle() {
       return this.puzzleInterface.puzzle
     },
@@ -58,6 +63,9 @@ export default defineComponent({
     }
   },
   methods: {
+    switchMode() {
+      this.puzzleInterface.switchMode();
+    },
     undo() {
       this.puzzleInterface.undo();
     },
