@@ -22,7 +22,7 @@ export class Puzzle {
     gridWidth: number;
 
     rules: PuzzleRule[] = [];
-    grid: Cell[][];
+    grid: Cell[][] = [];
 
     constructor(instanceConfig: InstanceConfig, puzzleConfig: PuzzleConfig) {
         // Process puzzleConfig
@@ -45,6 +45,21 @@ export class Puzzle {
         this.gridHeight = 2 * this.height + 1;
         this.gridWidth = 2 * this.width + 1;
 
+        this.initializeGrid();
+
+        // Add clues
+        if (instanceConfig.tileClues) {
+            this.loadTileClues(instanceConfig.tileClues);
+        }
+    }
+
+    private loadTileClues(clues: TileClue[]) {
+        clues.forEach((tileClue: TileClue) => {
+            this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value).setIsLocked(true);
+        })
+    }
+
+    private initializeGrid() {
         this.grid = [];
         for (let y = 0; y < this.gridHeight; y++) {
             const row = [];
@@ -52,7 +67,7 @@ export class Puzzle {
                 if (y % 2 === 0 && x % 2 === 0) {
                     row.push(new Corner())
                 } else if (y % 2 === 1 && x % 2 === 1) {
-                    row.push(new Tile(puzzleConfig.tileValues))
+                    row.push(new Tile(this.puzzleConfig.tileValues))
                 } else {
                     row.push(new Edge(y % 2 === 0))
                 }
@@ -107,13 +122,6 @@ export class Puzzle {
 
                 }
             }
-        }
-
-        // Add clues
-        if (instanceConfig.tileClues) {
-            instanceConfig.tileClues.forEach((tileClue: TileClue) => {
-                this.getTile(tileClue.x, tileClue.y).setValue(tileClue.value).setIsLocked(true);
-            })
         }
     }
 
@@ -231,4 +239,45 @@ export class Puzzle {
         }
         return edges;
     }
+
+    protected exportTiles(): string {
+        const res = []
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                const tile = this.getTile(x, y);
+                if (tile && Number.isFinite(tile.value)) {
+                    res.push(`(${x} ${y} ${tile.value})`)
+                }
+            }
+        }
+        return res.join(',');
+    }
+
+    protected importTiles(data: string): void {
+        if (!data) {
+            return;
+        }
+        const tuples = data.split(',');
+        const clues: TileClue[] = [];
+        for (let tuple of tuples) {
+            tuple = tuple.replace("(", "").replace(")", "");
+            const values = tuple.split(' ')
+            const x = Number.parseInt(values[0]);
+            const y = Number.parseInt(values[1]);
+            const value = Number.parseInt(values[2]);
+            clues.push({x, y, value})
+        }
+        this.initializeGrid();
+        this.loadTileClues(clues);
+    }
+
+    // TODO(@Isha) make abstract
+    public export(): string {
+        return ''
+    }
+
+    public import(data: string): void {
+        // Empty
+    }
+
 }

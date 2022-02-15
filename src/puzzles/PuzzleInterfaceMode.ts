@@ -1,4 +1,4 @@
 export enum PuzzleInterfaceMode {
-    Solving,
-    Editing,
+    Solving = 'Solving',
+    Editing = 'Editing',
 }

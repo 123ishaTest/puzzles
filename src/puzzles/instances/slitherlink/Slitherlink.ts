@@ -17,7 +17,6 @@ import {EdgeClickedAction} from "@/puzzles/interface/EdgeClickedAction";
 import {TileClickedAction} from "@/puzzles/interface/TileClickedAction";
 
 export class Slitherlink extends Puzzle {
-
     constructor(instanceConfig: InstanceConfig) {
         super(instanceConfig,
             {
@@ -50,9 +49,19 @@ export class Slitherlink extends Puzzle {
                     edgeRightClicked: EdgeClickedAction.ToggleEdgeDisabled,
                 },
                 editingConfig: {
+                    edgeLeftClicked: EdgeClickedAction.ToggleEdgeValue,
                     tileLeftClicked: TileClickedAction.CycleThroughValues,
                 },
             }
         );
     }
+
+    export(): string {
+        return this.exportTiles();
+    }
+
+    import(data: string): void {
+        this.importTiles(data);
+    }
+
 }

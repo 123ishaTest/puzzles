@@ -15,12 +15,15 @@
         <div v-for="(command, index) in commands" :key="command.toString()">
           <p>{{ command.toString() }}</p>
           <hr class="border-2 border-black"
-              v-if="puzzleSolver.commands.index === puzzleSolver.commands.commands.length - index-1">
+              v-if="puzzleInterface.commands.index === puzzleInterface.commands.commands.length - index-1">
         </div>
       </div>
     </div>
     <p>Is solved: {{ isSolved }}</p>
-
+    <p>Mode: {{puzzleInterface.mode}}</p>
+    <button @click="exportPuzzle" class="btn btn-blue">Export!</button>
+    <button @click="importPuzzle" class="btn btn-green">Import!</button>
+    <input class="input-primary" v-model="exportValue">
   </div>
 </template>
 
@@ -32,10 +35,10 @@ import {Edge} from "@/puzzles/Edge";
 import {Tile} from "@/puzzles/Tile";
 
 export default defineComponent({
-  name: 'PuzzleSolverComponent',
+  name: 'PuzzleInterfaceComponent',
   components: {PuzzleComponent},
   props: {
-    puzzleSolver: {
+    puzzleInterface: {
       type: PuzzleInterface,
       required: true,
     }
@@ -43,40 +46,47 @@ export default defineComponent({
   data() {
     return {
       isSolved: false,
+      exportValue: '',
     }
   },
   computed: {
     puzzle() {
-      return this.puzzleSolver.puzzle
+      return this.puzzleInterface.puzzle
     },
     commands() {
-      return this.puzzleSolver.commands.commands.slice().reverse();
+      return this.puzzleInterface.commands.commands.slice().reverse();
     }
   },
   methods: {
     undo() {
-      this.puzzleSolver.undo();
+      this.puzzleInterface.undo();
     },
     redo() {
-      this.puzzleSolver.redo();
+      this.puzzleInterface.redo();
+    },
+    exportPuzzle() {
+      this.exportValue = this.puzzleInterface.export();
+    },
+    importPuzzle() {
+      this.puzzleInterface.import(this.exportValue);
     },
     checkIsSolved() {
       this.isSolved = this.puzzle.isSolved()
     },
     edgeLeftClicked(edge: Edge) {
-      this.puzzleSolver.performEdgeClickAction(edge, true);
+      this.puzzleInterface.performEdgeClickAction(edge, true);
       this.checkIsSolved();
     },
     edgeRightClicked(edge: Edge) {
-      this.puzzleSolver.performEdgeClickAction(edge, false);
+      this.puzzleInterface.performEdgeClickAction(edge, false);
       this.checkIsSolved();
     },
     tileLeftClicked(tile: Tile) {
-      this.puzzleSolver.performTileClickAction(tile, true);
+      this.puzzleInterface.performTileClickAction(tile, true);
       this.checkIsSolved();
     },
     tileRightClicked(tile: Tile) {
-      this.puzzleSolver.performTileClickAction(tile, false);
+      this.puzzleInterface.performTileClickAction(tile, false);
       this.checkIsSolved();
     },
   },

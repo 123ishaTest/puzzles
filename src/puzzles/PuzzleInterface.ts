@@ -53,4 +53,12 @@ export class PuzzleInterface {
     public redo(): void {
         this.commands.redo()
     }
+
+    export(): string {
+        return this.puzzle.export();
+    }
+
+    import(data: string): void {
+        this.puzzle.import(data);
+    }
 }
