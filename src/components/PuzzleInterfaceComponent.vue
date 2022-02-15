@@ -20,11 +20,10 @@
       </div>
     </div>
     <p>Is solved: {{ isSolved }}</p>
-    <p>Mode: {{ puzzleInterface.mode }}</p>
     <button @click="exportPuzzle" class="btn btn-blue">Export!</button>
     <input class="input-primary" v-model="exportValue">
     <button @click="importPuzzle" class="btn btn-red">Import!</button>
-    <button @click="switchMode" class="btn btn-green">{{ isSolving ? 'Edit' : 'Play' }}</button>
+    <button @click="switchMode" class="btn btn-green">{{ isSolving ? 'Solving' : 'Editing' }}</button>
   </div>
 </template>
 
@@ -55,6 +54,9 @@ export default defineComponent({
     isSolving(): boolean {
       return this.puzzleInterface.mode === PuzzleInterfaceMode.Solving;
     },
+    isEditing(): boolean {
+      return this.puzzleInterface.mode === PuzzleInterfaceMode.Editing;
+    },
     puzzle() {
       return this.puzzleInterface.puzzle
     },
@@ -73,6 +75,10 @@ export default defineComponent({
       this.puzzleInterface.redo();
     },
     exportPuzzle() {
+      if (this.isEditing && !this.isSolved) {
+        alert("You can only export solved puzzles");
+        return;
+      }
       this.exportValue = this.puzzleInterface.export();
     },
     importPuzzle() {
