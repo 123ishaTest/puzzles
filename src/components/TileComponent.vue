@@ -1,5 +1,8 @@
 <template>
-  <div @click="click" class="h-12 w-12 bg-blue-400 flex flex-col justify-center">
+  <div
+      @click="leftClick"
+      @click.right="rightClick"
+      class="h-12 w-12 bg-blue-400 flex flex-col justify-center">
     <div class="text-center"> {{ tile.value }}</div>
   </div>
 </template>
@@ -17,9 +20,12 @@ export default defineComponent({
     }
   },
   methods: {
-    click(): void {
-      this.$emit('tile', this.tile);
-    }
+    leftClick(): void {
+      this.$parent?.$emit('tileLeft', this.tile);
+    },
+    rightClick(): void {
+      this.$parent?.$emit('tileRight', this.tile);
+    },
   },
 });
 </script>

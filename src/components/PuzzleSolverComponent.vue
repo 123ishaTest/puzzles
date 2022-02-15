@@ -4,6 +4,8 @@
       <puzzle-component :puzzle="puzzle"
                         @edgeLeft="edgeLeftClicked"
                         @edgeRight="edgeRightClicked"
+                        @tileLeft="tileLeftClicked"
+                        @tileRight="tileRightClicked"
       ></puzzle-component>
       <div class="flex flex-col p-4 max-h-96 overflow-y-scroll">
         <div class="flex flex-row flex-wrap justify-items-stretch">
@@ -27,6 +29,7 @@ import {defineComponent} from 'vue';
 import {PuzzleInterface} from "@/puzzles/PuzzleInterface";
 import PuzzleComponent from "@/components/PuzzleComponent.vue";
 import {Edge} from "@/puzzles/Edge";
+import {Tile} from "@/puzzles/Tile";
 
 export default defineComponent({
   name: 'PuzzleSolverComponent',
@@ -66,6 +69,14 @@ export default defineComponent({
     },
     edgeRightClicked(edge: Edge) {
       this.puzzleSolver.performEdgeClickAction(edge, false);
+      this.checkIsSolved();
+    },
+    tileLeftClicked(tile: Tile) {
+      this.puzzleSolver.performTileClickAction(tile, true);
+      this.checkIsSolved();
+    },
+    tileRightClicked(tile: Tile) {
+      this.puzzleSolver.performTileClickAction(tile, false);
       this.checkIsSolved();
     },
   },

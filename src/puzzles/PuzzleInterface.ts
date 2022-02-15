@@ -9,15 +9,18 @@ import {ToggleDisableEdgeCommand} from "@/puzzles/commands/ToggleDisableEdgeComm
 import {Tile} from "@/puzzles/Tile";
 import {TileClickedAction} from "@/puzzles/interface/TileClickedAction";
 import {CycleThroughTileValuesCommand} from "@/puzzles/commands/CycleThroughTileValuesCommand";
+import {PuzzleInterfaceMode} from "@/puzzles/PuzzleInterfaceMode";
 
 export class PuzzleInterface {
     puzzle: Puzzle;
+    mode: PuzzleInterfaceMode;
     commands: CommandHistory;
     config: InterfaceConfig;
 
-    constructor(puzzle: Puzzle) {
+    constructor(puzzle: Puzzle, mode: PuzzleInterfaceMode) {
         this.puzzle = puzzle;
-        this.config = puzzle.puzzleConfig.solvingConfig;
+        this.mode = mode;
+        this.config = mode === PuzzleInterfaceMode.Solving ? puzzle.puzzleConfig.solvingConfig : puzzle.puzzleConfig.editingConfig;
         this.commands = new CommandHistory();
     }
 

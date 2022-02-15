@@ -17,7 +17,8 @@ export class CycleThroughTileValuesCommand extends AbstractCommand {
         this._oldValue = this._tile.value;
         const index = this._tile.allowedValues.indexOf(this._oldValue);
         const next = (index + 1) % this._tile.allowedValues.length;
-        this._tile.setValue(this._tile.allowedValues[next]);
+        const nextValue = this._tile.allowedValues[next];
+        this._tile.setValue(nextValue);
         return true;
     }
 
